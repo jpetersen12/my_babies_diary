@@ -1,0 +1,71 @@
+<!-- Validation failure messages -->
+<% if @feeding.errors.any? %>
+<% @feeding.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Feeding</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_feeding/<%= @feeding.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for infant_id -->
+
+
+      <input type="hidden" id="infant_id" name="infant_id" placeholder="Infant" class="form-control" value="<%= @feeding.infant_id %>">
+
+      <!-- Label and input for amount -->
+      <div class="form-group">
+        <label for="amount" class="control-label">
+          Amount (Ounces)
+        </label>
+
+        <%= select_tag(:amount, options_for_select(['0','1','2','3','4','5','6','7','8','9','10',]), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for note -->
+      <div class="form-group">
+        <label for="note" class="control-label">
+          Notes
+        </label>
+
+        <input type="text" id="note" name="note" placeholder="Note (i.e. Breast-milk, Formula, No spit-up)" class="form-control" value="<%= @feeding.note %>">
+      </div>
+
+
+
+      <!-- Label and input for date -->
+      <div class="form-group">
+        <label for="date" class="control-label">
+          Date
+        </label>
+
+        <input type="text" id="date" name="date" placeholder="Date" class="form-control" value="<%= @feeding.date.strftime("%D") %>">
+      </div>
+
+      <!-- Label and input for time -->
+      <div class="form-group">
+        <label for="time" class="control-label">
+          Time
+        </label>
+
+        <input type="text" id="time" name="time" placeholder="Time" class="form-control" value="<%= @feeding.time.strftime("%l:%M %p") %>">
+      </div>
+
+      <button class="btn btn-info">
+        Update Feeding
+      </button>
+      or
+      <a href="/infants/<%= @feeding.infant_id %>">Cancel</a>
+    </form>
+  </div>
+</div>

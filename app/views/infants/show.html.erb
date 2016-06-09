@@ -1,0 +1,275 @@
+<div class="page-header">
+  <h2><%= @infant.name %>'s Diary Dashboard </h2>
+  <a href="/infants" class="btn btn-sm btn-info">
+    Return to My Babies
+  </a>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="bold">Did <%=@infant.name%> just wake up?</h3>
+      <form action="/create_nap" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <!-- Label and input for infant_id -->
+        <div class="form-group">
+          <input type="hidden" name="infant_id" value="<%= @infant.id%>">
+        </div>
+        <!-- Label and input for length in hours -->
+        <div class="form-group">
+          <div class="row">
+
+            <div class="col-md-4">
+              <label for="length_hours" class="control-label">
+                Hours of Sleep
+              </label>
+              <%= select_tag(:length_hours, options_for_select(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',]), :class => "form-control") %>
+
+
+            </div>
+            <div class="col-md-4">
+              <label for="length_minutes" class="control-label">
+                Minutes of Sleep
+              </label>
+              <%= select_tag(:length_minutes, options_for_select(['0','15','30','45',]), :class => "form-control") %>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- Label and input for note -->
+        <div class="form-group">
+          <label for="note" class="control-label">
+            Notes
+          </label>
+          <textarea id="note" name="note" placeholder="Note (i.e. woke up happy, smiling, etc.)" class="form-control" rows="3"><%= @nap.note %></textarea>
+
+        </div>
+
+        <!-- Label and input for date -->
+        <div class="form-group">
+          <label for="date" class="control-label">
+            Date
+          </label>
+
+          <input type="text" id="date" name="date" placeholder="<%= Time.now.strftime("%D") %>" class="form-control" value= "<%= Time.now.strftime("%D") %>">
+        </div>
+
+        <!-- Label and input for time -->
+        <div class="form-group">
+          <label for="time" class="control-label">
+            Time
+          </label>
+
+          <input type="text" id="time" name="time" placeholder="<%= Time.now.strftime("%l:%M %p") %>" class="form-control" value= "<%= Time.now.strftime("%l:%M %p") %>" >
+        </div>
+
+        <button class="btn btn-success">
+          Create Nap
+        </button>
+      </form>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3><%= @infant.name%>'s Recent Naps</h3>
+      <table class="table table-striped table-hover">
+        <tr>
+          <th>Length (hr:min)</th>
+          <th>Notes</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Actions</th>
+        </tr>
+
+        <% @infant.naps.each do |nap| %>
+        <tr>
+          <td><%= nap.length_hours%>:<%= nap.length_minutes%></td>
+          <td><%= nap.note %></td>
+          <td><%= nap.date.strftime("%D") %></td>
+          <td><%= nap.time.strftime("%l:%M %p") %></td>
+          <td>
+            <a href="/naps/<%= nap.id %>/edit" class="btn btn-info">Edit</a>
+            <a href="/delete_nap/<%= nap.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+
+
+    <div class="col-md-12">
+      <h3 class="bold">Did <%=@infant.name%> just eat?</h3>
+
+      <form action="/create_feeding" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <!-- Label and input for infant_id -->
+        <div class="form-group">
+
+          <input type="hidden" id="infant_id" name="infant_id" placeholder="Infant" class="form-control" value="<%= @infant.id %>">
+        </div>
+        <!-- Label and input for amount -->
+        <div class="form-group">
+          <label for="amount" class="control-label">
+            Amount (Ounces)
+          </label>
+
+          <%= select_tag(:amount, options_for_select(['0','1','2','3','4','5','6','7','8','9','10',]), :class => "form-control") %>        </div>
+          <!-- Label and input for note -->
+          <div class="form-group">
+            <label for="note" class="control-label">
+              Note
+            </label>
+
+            <textarea id="note" name="note" placeholder="Note (i.e. Breast-milk, Formula, No spit-up)" class="form-control" rows="3"><%= @feeding.note %></textarea>
+          </div>
+
+          <!-- Label and input for date -->
+          <div class="form-group">
+            <label for="date" class="control-label">
+              Date
+            </label>
+
+            <input type="text" id="date" name="date" placeholder="<%= Time.now.strftime("%D") %>" class="form-control" value= "<%= Time.now.strftime("%D") %>">
+          </div>
+
+          <!-- Label and input for time -->
+          <div class="form-group">
+            <label for="time" class="control-label">
+              Time
+            </label>
+
+            <input type="text" id="time" name="time" placeholder="<%= Time.now.strftime("%l:%M %p") %>" class="form-control" value= "<%= Time.now.strftime("%l:%M %p") %>" >
+          </div>
+
+          <button class="btn btn-success">
+            Create Feeding
+          </button>
+
+        </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3><%= @infant.name%>'s Recent Feedings</h3>
+          <table class="table table-striped table-hover">
+            <tr>
+              <th>Amount</th>
+              <th>Notes</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Actions</th>
+            </tr>
+
+            <% @infant.feedings.each do |feeding| %>
+            <tr>
+              <td><%= feeding.amount%> Oz.</td>
+              <td><%= feeding.note %></td>
+              <td><%= feeding.date.strftime("%D") %></td>
+              <td><%= feeding.time.strftime("%l:%M %p") %></td>
+              <td>
+                <a href="/feedings/<%= feeding.id %>/edit" class="btn btn-info">Edit</a>
+                <a href="/delete_feeding/<%= feeding.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+              </td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="bold">Did <%=@infant.name%> just do something amazing?</h3>
+          <form action="/create_milestone" method="post" enctype="multipart/form-data">
+            <!-- Hidden input for authenticity token to protect from forgery -->
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+            <!-- Label and input for infant_id -->
+            <div class="form-group">
+
+              <input type="hidden" id="infant_id" name="infant_id" placeholder="Infant" class="form-control" value="<%= @infant.id %>">
+
+              <!-- Label and input for photo -->
+              <div class="form-group">
+                <label for="photo" class="control-label">
+                  Photo of Milestone
+                </label>
+
+                <input type="file" id="photo" name="photo" class="form-control">
+              </div>
+
+              <!-- Label and input for date -->
+              <div class="form-group">
+                <label for="date" class="control-label">
+                  Date
+                </label>
+
+                <input type="text" id="date" name="date" placeholder="<%= Time.now.strftime("%D") %>" class="form-control" value= "<%= Time.now.strftime("%D") %>">
+              </div>
+
+              <!-- Label and input for description -->
+              <div class="form-group">
+                <label for="description" class="control-label">
+                  Description
+                </label>
+
+                <textarea id="description" name="description" placeholder="Description (i.e. Rolled-over, Giggling, etc.)" class="form-control" rows="3"><%= @milestone.description %></textarea>
+              </div>
+
+              <button class="btn btn-success">
+                Create Milestone
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3><%= @infant.name%>'s Recent Amazing Milestones</h3>
+          <table class="table table-striped table-hover">
+            <tr>
+              <th>Photo</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+
+            <% @infant.milestones.each do |milestone| %>
+            <tr>
+              <td><img src="<%= milestone.photo %>" class="img-responsive" width="200
+                "></td>
+                <td><%= milestone.description %></td>
+                <td><%= milestone.date.strftime("%D") %></td>
+                <td>
+                  <a href="/milestones/<%= milestone.id %>/edit" class="btn btn-info">Edit</a>
+                  <a href="/delete_milestone/<%= milestone.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+                </td>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="col-md-12">
+          <a href="/infants" class="btn btn-sm btn-info">
+            Return to my babies
+          </a>
+        </div>
+
+      </div>

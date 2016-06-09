@@ -1,0 +1,73 @@
+<!-- Validation failure messages -->
+<% if @feeding.errors.any? %>
+  <% @feeding.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Feeding</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_feeding" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for infant_id -->
+      <div class="form-group">
+        <label for="infant_id" class="control-label">
+          Infant
+        </label>
+
+        <input type="text" id="infant_id" name="infant_id" placeholder="Infant" class="form-control" value="<%= @feeding.infant_id %>">
+      </div>
+
+      <!-- Label and input for note -->
+      <div class="form-group">
+        <label for="note" class="control-label">
+          Note
+        </label>
+
+        <input type="text" id="note" name="note" placeholder="Note" class="form-control" value="<%= @feeding.note %>">
+      </div>
+
+      <!-- Label and input for amount -->
+      <div class="form-group">
+        <label for="amount" class="control-label">
+          Amount
+        </label>
+
+        <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" value="<%= @feeding.amount %>">
+      </div>
+
+      <!-- Label and input for date -->
+      <div class="form-group">
+        <label for="date" class="control-label">
+          Date
+        </label>
+
+        <input type="text" id="date" name="date" placeholder="Date" class="form-control" value="<%= @feeding.date %>">
+      </div>
+
+      <!-- Label and input for time -->
+      <div class="form-group">
+        <label for="time" class="control-label">
+          Time
+        </label>
+
+        <input type="text" id="time" name="time" placeholder="Time" class="form-control" value="<%= @feeding.time %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Feeding
+      </button>
+      or
+      <a href="/feedings">Cancel</a>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>
+    Naps
+    <a href="/naps/new" class="btn btn-lg btn-success">New Nap</a>
+  </h1>
+</div>
+
+<%= column_chart Nap.group(:date).sum(:length_hours), ytitle: "Total Sleep Time" %>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Infant</th>
+        <th>Note</th>
+        <th>Length</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @naps.each do |nap| %>
+      <tr>
+        <td><%= nap.infant_id%></td>
+        <td><%= nap.note %></td>
+        <td><%= nap.length_hours%>:<%= nap.length_minutes%></td>
+        <td><%= nap.date %></td>
+        <td><%= nap.time %></td>
+        <td>
+          <a href="/naps/<%= nap.id %>/edit" class="btn btn-info">Edit</a>
+          <a href="/delete_nap/<%= nap.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

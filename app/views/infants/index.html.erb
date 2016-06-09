@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h1>
+    My Baby Diary
+    <a href="/infants/new" class="btn btn-md btn-success">Add a new Infant to My Diary</a>
+  </h1>
+</div>
+
+<div class="container-fluid">
+
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Baby's picture</th>
+        <th>Baby's name</th>
+        <th class="text-center">
+          Actions
+        </th>
+      </tr>
+
+      <% @infants.each do |infant| %>
+      <tr>
+        <td><img src="<%= infant.image %>" class="img-responsive" width="200
+          "></td>
+        <td>
+          <h3><%= infant.name %></h3>
+        </td>
+        <td class="text-center">
+          <div class="btn-group btn-group-vertical">
+            <a href="/infants/<%= infant.id %>" class="btn btn-success">View <%= infant.name %>'s Dashboard</a>
+            <a href="/infants/<%= infant.id %>/edit" class="btn btn-info">Update Information</a>
+            <a href="/delete_infant/<%= infant.id %>" class="btn btn-danger" rel="nofollow">Remove from My Diary</a>
+          </div>
+
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+</div>

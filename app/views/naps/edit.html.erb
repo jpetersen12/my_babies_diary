@@ -1,0 +1,81 @@
+<!-- Validation failure messages -->
+<% if @nap.errors.any? %>
+<% @nap.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Nap</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_nap/<%= @nap.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for infant_id -->
+      <input type="hidden" id="infant_id" name="infant_id" placeholder="Infant" class="form-control" value="<%= @nap.infant_id %>">
+      <!-- Label and input for length -->
+      <div class="form-group">
+        <div class="row">
+
+          <div class="col-md-6">
+            <label for="length_hours" class="control-label">
+              Hours of Sleep
+            </label>
+            <%= select_tag(:length_hours, options_for_select(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',]), :class => "form-control") %>
+
+
+          </div>
+          <div class="col-md-6">
+            <label for="length_minutes" class="control-label">
+              Minutes of Sleep
+            </label>
+            <%= select_tag(:length_minutes, options_for_select(['0','15','30','45',]), :class => "form-control") %>
+
+          </div>
+
+        </div>
+      </div>
+      <!-- Label and input for note -->
+      <div class="form-group">
+        <label for="note" class="control-label">
+          Notes
+        </label>
+
+        <textarea id="note" name="note" placeholder="Notes (i.e. woke up happy, smiling, etc.)" class="form-control" rows="3"><%= @nap.note %></textarea>
+      </div>
+
+
+
+      <!-- Label and input for date -->
+      <div class="form-group">
+        <label for="date" class="control-label">
+          Date
+        </label>
+
+        <input type="text" id="date" name="date" placeholder="Date" class="form-control" value="<%= @nap.date.strftime("%D") %>">
+      </div>
+
+      <!-- Label and input for time -->
+      <div class="form-group">
+        <label for="time" class="control-label">
+          Time
+        </label>
+
+        <input type="text" id="time" name="time" placeholder="Time" class="form-control" value="<%= @nap.time.strftime("%l:%M %p") %>">
+      </div>
+
+      <button class="btn btn-info">
+        Update Nap
+      </button>
+      or
+      <a href="/infants/<%= @nap.infant_id %>">Cancel</a>
+    </form>
+  </div>
+</div>

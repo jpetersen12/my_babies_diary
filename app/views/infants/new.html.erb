@@ -1,0 +1,47 @@
+<!-- Validation failure messages -->
+<% if @infant.errors.any? %>
+  <% @infant.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Infant</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_infant" method="post" enctype="multipart/form-data">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Input for user_account_id -->
+
+        <input type="hidden" id="user_account_id" name="user_account_id"  value="<%= current_user_account.id %>">
+
+        <!-- Input for Infant name -->
+        <div class="form-group">
+          <label for="name" class="control-label">
+            Baby's name
+          </label>
+
+          <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @infant.name %>">
+        </div>
+        <!-- Input for Infant image URL -->
+        <div class="form-group">
+          <input type="file" id="image" name="image" class="form-control">
+
+
+        </div>
+
+      <button class="btn btn-success">
+        Create Infant
+      </button>
+      or
+      <a href="/infants">Cancel</a>
+    </form>
+  </div>
+</div>

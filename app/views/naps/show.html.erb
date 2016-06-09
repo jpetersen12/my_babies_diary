@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h3>Nap #<%= @nap.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Infant</dt>
+      <dd><%= @nap.infant_id %></dd>
+
+      <dt>Note</dt>
+      <dd><%= @nap.note %></dd>
+
+      <dt>Length</dt>
+      <dd><%= @nap.length %></dd>
+
+      <dt>Date</dt>
+      <dd><%= @nap.date %></dd>
+
+      <dt>Time</dt>
+      <dd><%= @nap.time %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/naps" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/naps/<%= @nap.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_nap/<%= @nap.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
