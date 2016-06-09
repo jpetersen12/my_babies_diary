@@ -46,7 +46,7 @@ class MilestonesController < ApplicationController
 
   def destroy
     @milestone = Milestone.find(params[:id])
-    @infant = @mileston.infant_id
+    @infant = @milestone.infant_id
 
     @milestone.destroy
 
