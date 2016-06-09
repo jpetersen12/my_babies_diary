@@ -33,7 +33,8 @@ class InfantsController < ApplicationController
 
   def update
     @infant = Infant.find(params[:id])
-
+    @infant.name = params[:name]
+    @infant.image = params[:image]
     @infant.user_account_id = params[:user_account_id]
 
     if @infant.save
